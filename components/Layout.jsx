@@ -1,7 +1,8 @@
 import React from 'react';
 import Head from 'next/head';
-import { AppBar, Container, Toolbar, Typography } from '@material-ui/core';
+import { Link, AppBar, Container, Toolbar, Typography } from '@material-ui/core';
 import useStyles from '../styles/styles';
+import NextLink from 'next/link';
 
 export default function Layout({ children }) {
   const styles = useStyles();
@@ -12,7 +13,11 @@ export default function Layout({ children }) {
       </Head>
       <AppBar position="static" className={styles.navbar}>
         <Toolbar>
-          <Typography>JS Store</Typography>
+          <NextLink href='/' passHref> 
+            <Link>
+              <Typography>JS Store</Typography>
+            </Link>
+          </NextLink>
         </Toolbar>
       </AppBar>
       <Container className={styles.main}>{children}</Container>
