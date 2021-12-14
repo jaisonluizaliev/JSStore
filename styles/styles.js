@@ -12,6 +12,8 @@ const useStyles = makeStyles({
     },
   },
   main: {
+    maxWidth: '80%',
+    margin: '0 auto',
     minHeight: '80vh',
   },
   center: {
@@ -19,6 +21,13 @@ const useStyles = makeStyles({
   },
   footer: {
     textAlign: 'center',
+  },
+  brand: {
+    fontWeight: 'bold',
+    fontSize: '1.5rem',
+  },
+  grow: {
+    flexGrow: 1,
   },
 });
 

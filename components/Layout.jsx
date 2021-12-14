@@ -13,11 +13,20 @@ export default function Layout({ children }) {
       </Head>
       <AppBar position="static" className={styles.navbar}>
         <Toolbar>
-          <NextLink href='/' passHref> 
+          <NextLink href="/" passHref>
             <Link>
-              <Typography>JS Store</Typography>
+              <Typography className={styles.brand}>JS Store</Typography>
             </Link>
           </NextLink>
+          <div className={styles.grow}></div>
+          <div>
+            <NextLink href="/cart" passHref>
+              <Link>Cart</Link>
+            </NextLink>
+            <NextLink href="/login" passHref>
+              <Link>Login</Link>
+            </NextLink>
+          </div>
         </Toolbar>
       </AppBar>
       <Container className={styles.main}>{children}</Container>

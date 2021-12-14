@@ -32,9 +32,14 @@ export default function Home() {
                 </CardContent>
               </CardActionArea>
               <CardActions>
-                <Typography>${product.price}</Typography>
+                <Typography>
+                  {Number(product.price).toLocaleString('pt-br', {
+                    style: 'currency',
+                    currency: 'BRL',
+                  })}
+                </Typography>
                 <Button size="small" color="primary">
-                  Add to cart
+                  colocar no carrinho
                 </Button>
               </CardActions>
             </Card>
