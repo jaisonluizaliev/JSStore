@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import Head from 'next/head';
 import {
   Link,
@@ -9,13 +9,28 @@ import {
   createTheme,
   ThemeProvider,
   CssBaseline,
+  Switch,
 } from '@material-ui/core';
 import useStyles from '../styles/styles';
 import NextLink from 'next/link';
-import { light } from '@material-ui/core/styles/createPalette';
+import { Store } from '../utils/Store';
+import Cookies from 'js-cookie';
 
 export default function Layout({ title, description, children }) {
+
+  const {state, dispatch} = useContext(Store);
+  const {darkMode} = state;
+
   const styles = useStyles();
+
+  const darkModeChangeHandler = () => {
+    dispatch({
+      type: darkMode ? 'DARK_MODE_OFF' : 'DARK_MODE_ON',
+    });
+    const newMode = !darkMode;
+    Cookies.set('darkMode', newMode ? 'ON' : 'OFF');
+  }
+
   const theme = createTheme({
     typography: {
       h1: {
@@ -30,14 +45,14 @@ export default function Layout({ title, description, children }) {
       },
     },
     palette: {
-      type: 'light',
+      type: darkMode ? 'dark' : 'light',
       primary: {
-        main: '#266fce'
+        main: '#266fce',
       },
       secondary: {
-        main: '#204060'
-      }
-    }
+        main: '#204060',
+      },
+    },
   });
   return (
     <>
@@ -46,29 +61,33 @@ export default function Layout({ title, description, children }) {
         {description && <meta name="description" content={description} />}
       </Head>
       <ThemeProvider theme={theme}>
-      <CssBaseline/>
-      <AppBar position="static" className={styles.navbar}>
-        <Toolbar>
-          <NextLink href="/" passHref>
-            <Link>
-              <Typography className={styles.brand}>JS Store</Typography>
-            </Link>
-          </NextLink>
-          <div className={styles.grow}></div>
-          <div>
-            <NextLink href="/cart" passHref>
-              <Link>Carrinho de Compras</Link>
+        <CssBaseline />
+        <AppBar position="static" className={styles.navbar}>
+          <Toolbar>
+            <NextLink href="/" passHref>
+              <Link>
+                <Typography className={styles.brand}>JS Store</Typography>
+              </Link>
             </NextLink>
-            <NextLink href="/login" passHref>
-              <Link>Area do Cliente</Link>
-            </NextLink>
-          </div>
-        </Toolbar>
-      </AppBar>
-      <Container className={styles.main}>{children}</Container>
-      <footer className={styles.footer}>
-        <Typography>Todos os direitos reservados a JS Store </Typography>
-      </footer>
+            <div className={styles.grow}></div>
+            <div>
+              <Switch
+                checked={darkMode}
+                onChange={darkModeChangeHandler}
+              />
+              <NextLink href="/cart" passHref>
+                <Link>Carrinho de Compras</Link>
+              </NextLink>
+              <NextLink href="/login" passHref>
+                <Link>Area do Cliente</Link>
+              </NextLink>
+            </div>
+          </Toolbar>
+        </AppBar>
+        <Container className={styles.main}>{children}</Container>
+        <footer className={styles.footer}>
+          <Typography>Todos os direitos reservados a JS Store </Typography>
+        </footer>
       </ThemeProvider>
     </>
   );
