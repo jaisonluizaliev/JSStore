@@ -1,13 +1,11 @@
 const data = {
   products: [
     {
-      
-      name: 'Sandália rosa',
+      name: 'Sandália Rosa',
       slug: 'sandalia-rosa',
       category: 'sandalia',
-      image:
-        'https://amartcalcados.com.br/wp-content/uploads/2021/09/IMG_0179-600x600.jpg',
-      price: 59.90,
+      image: '/sandalia-rosa.jpg',
+      price: 59.9,
       brand: 'Ramdom',
       rating: 4.5,
       numReviews: 10,
@@ -15,13 +13,11 @@ const data = {
       description: 'Sandália rosa pro verão',
     },
     {
-      
       name: 'Sandália Azul',
       slug: 'sandalia-azul',
       category: 'sandalia',
-      image:
-        'https://amartcalcados.com.br/wp-content/uploads/2021/09/IMG_0178-600x600.jpg',
-      price: 59.90,
+      image: '/sandalia-azul.jpg',
+      price: 59.9,
       brand: 'Ramdom',
       rating: 4.2,
       numReviews: 10,
@@ -29,13 +25,11 @@ const data = {
       description: 'A popular shirt',
     },
     {
-      
       name: 'Scarpin Onça',
       slug: 'scarpin-onca',
       category: 'scarpin',
-      image:
-        'https://amartcalcados.com.br/wp-content/uploads/2021/07/IMG_6404-600x600.jpg',
-      price: 59.90,
+      image: '/scarpin-onca.jpg',
+      price: 59.9,
       brand: 'Ramdom',
       rating: 4.5,
       numReviews: 10,
@@ -43,13 +37,11 @@ const data = {
       description: 'A popular shirt',
     },
     {
-      
       name: 'Boneca',
       slug: 'boneca',
       category: 'boneca',
-      image:
-        'https://amartcalcados.com.br/wp-content/uploads/2020/06/IMG_0228-600x600.jpg',
-      price: 59.90,
+      image: '/boneca.jpg',
+      price: 59.9,
       brand: 'Ramdom',
       rating: 4.5,
       numReviews: 10,
@@ -57,13 +49,11 @@ const data = {
       description: 'Smart looking pants',
     },
     {
-      
-      name: 'Sandália Prata/Preto',
-      slug: 'sandália-prata-preto',
+      name: 'Sandália Prata e Preto',
+      slug: 'sandália-prata-e-preto',
       category: 'sandalia',
-      image:
-        'https://amartcalcados.com.br/wp-content/uploads/2021/04/IMG_0241-600x600.jpg',
-      price: 59.90,
+      image: '/sandália-prata-e-preto.jpg',
+      price: 59.9,
       brand: 'Ramdom',
       rating: 4.5,
       numReviews: 10,
@@ -71,13 +61,11 @@ const data = {
       description: 'Salto confortavel',
     },
     {
-      
-      name: 'Sandália salto curto',
+      name: 'Sandália Salto Curto',
       slug: 'sandalia-salto-curto',
       category: 'Sandalia',
-      image:
-        'https://amartcalcados.com.br/wp-content/uploads/2021/04/IMG_0244-600x600.jpg',
-      price: 59.90,
+      image: '/sandalia-salto-curto.jpg',
+      price: 59.9,
       brand: 'Ramdom',
       rating: 4.5,
       numReviews: 10,
@@ -85,13 +73,11 @@ const data = {
       description: 'para quem gosta de calçados baixos com classe',
     },
     {
-      
-      name: 'Scarpin salto baixo',
+      name: 'Scarpin Salto Baixo',
       slug: 'scarpin-salto-baixo',
       category: 'scarpin',
-      image:
-        'https://amartcalcados.com.br/wp-content/uploads/2021/04/IMG_0243-600x600.jpg',
-      price: 59.90,
+      image: '/scarpin-salto-baixo.jpg',
+      price: 59.9,
       brand: 'Ramdom',
       rating: 4.5,
       numReviews: 10,
@@ -99,13 +85,11 @@ const data = {
       description: 'Estilo e conforto',
     },
     {
-      
       name: 'Scarpin Branco',
       slug: 'scarpin-branco',
       category: 'scarpin',
-      image:
-        'https://amartcalcados.com.br/wp-content/uploads/2019/11/IMG_0153-600x600.jpg',
-      price: 59.90,
+      image:'/scarpin-branco.jpg',
+      price: 59.9,
       brand: 'Ramdom',
       rating: 4.5,
       numReviews: 10,

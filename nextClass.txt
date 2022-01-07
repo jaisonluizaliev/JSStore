@@ -1,3 +1,2 @@
-git checkout -b 'Add-Header-Links'
-
-https://github.com/basir/next-amazona/commit/d768e3d1baeeb8872e11a1cd5bfc7fd4ce7bebf8
+stopped Here
+https://github.com/basir/next-amazona/commit/d2667d19356241e893b5f7c89dfd527b08461704  

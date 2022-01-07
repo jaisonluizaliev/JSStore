@@ -4,12 +4,13 @@ import { Link, AppBar, Container, Toolbar, Typography } from '@material-ui/core'
 import useStyles from '../styles/styles';
 import NextLink from 'next/link';
 
-export default function Layout({ children }) {
+export default function Layout({ title, description, children }) {
   const styles = useStyles();
   return (
     <>
       <Head>
-        <title></title>
+        <title>{title ? `${title} || JS Store` : 'JS Store'}</title>
+        {description && <meta name="description" content={description} />}
       </Head>
       <AppBar position="static" className={styles.navbar}>
         <Toolbar>
@@ -21,10 +22,10 @@ export default function Layout({ children }) {
           <div className={styles.grow}></div>
           <div>
             <NextLink href="/cart" passHref>
-              <Link>Cart</Link>
+              <Link>Carrinho de Compras</Link>
             </NextLink>
             <NextLink href="/login" passHref>
-              <Link>Login</Link>
+              <Link>Area do Cliente</Link>
             </NextLink>
           </div>
         </Toolbar>

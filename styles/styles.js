@@ -21,6 +21,8 @@ const useStyles = makeStyles({
   },
   footer: {
     textAlign: 'center',
+    padding: '20px 0',
+    background: '#e4edf9',
   },
   brand: {
     fontWeight: 'bold',
@@ -28,6 +30,15 @@ const useStyles = makeStyles({
   },
   grow: {
     flexGrow: 1,
+  },
+  section: {
+    marginTop: 10,
+    marginBottom: 10,
+  },
+  imageSlug :{
+    backgroundColor: '#e4edf9',
+    borderRadius: '4px',
+    padding: '2px',
   },
 });
 
