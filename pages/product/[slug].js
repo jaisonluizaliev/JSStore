@@ -49,7 +49,7 @@ export default function ProductScreen() {
             <Grid item md={3} xs={12}>
               <List>
                 <ListItem>
-                  <Typography component="h1" variant="h6">
+                  <Typography component="h1" variant="h1">
                     {product.name}
                   </Typography>
                 </ListItem>
@@ -67,6 +67,9 @@ export default function ProductScreen() {
                 </ListItem>
                 <ListItem>
                   <Typography>Estoque: {product.countInStock} Pares</Typography>
+                </ListItem>
+                <ListItem>
+                  <Typography>Descrição: {product.description}</Typography>
                 </ListItem>
               </List>
             </Grid>
@@ -94,7 +97,11 @@ export default function ProductScreen() {
                         <Typography>Status</Typography>
                       </Grid>
                       <Grid item xs={6}>
-                        <Typography>{product.countInStock > 0 ? 'Em estoque' : 'Indisponível'}</Typography>
+                        <Typography>
+                          {product.countInStock > 0
+                            ? 'Em estoque'
+                            : 'Indisponível'}
+                        </Typography>
                       </Grid>
                     </Grid>
                   </ListItem>

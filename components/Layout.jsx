@@ -1,17 +1,52 @@
 import React from 'react';
 import Head from 'next/head';
-import { Link, AppBar, Container, Toolbar, Typography } from '@material-ui/core';
+import {
+  Link,
+  AppBar,
+  Container,
+  Toolbar,
+  Typography,
+  createTheme,
+  ThemeProvider,
+  CssBaseline,
+} from '@material-ui/core';
 import useStyles from '../styles/styles';
 import NextLink from 'next/link';
+import { light } from '@material-ui/core/styles/createPalette';
 
 export default function Layout({ title, description, children }) {
   const styles = useStyles();
+  const theme = createTheme({
+    typography: {
+      h1: {
+        fontSize: '1.6rem',
+        fontWeight: 400,
+        margin: '1rem 0',
+      },
+      h2: {
+        fontSize: '1.4rem',
+        fontWeight: 400,
+        margin: '1rem 0',
+      },
+    },
+    palette: {
+      type: 'light',
+      primary: {
+        main: '#266fce'
+      },
+      secondary: {
+        main: '#204060'
+      }
+    }
+  });
   return (
     <>
       <Head>
         <title>{title ? `${title} || JS Store` : 'JS Store'}</title>
         {description && <meta name="description" content={description} />}
       </Head>
+      <ThemeProvider theme={theme}>
+      <CssBaseline/>
       <AppBar position="static" className={styles.navbar}>
         <Toolbar>
           <NextLink href="/" passHref>
@@ -34,6 +69,7 @@ export default function Layout({ title, description, children }) {
       <footer className={styles.footer}>
         <Typography>Todos os direitos reservados a JS Store </Typography>
       </footer>
+      </ThemeProvider>
     </>
   );
 }

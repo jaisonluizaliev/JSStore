@@ -23,6 +23,7 @@ const useStyles = makeStyles({
     textAlign: 'center',
     padding: '20px 0',
     background: '#e4edf9',
+    borderTop: '4px solid rgba(0,0,0, 0.3)'
   },
   brand: {
     fontWeight: 'bold',
