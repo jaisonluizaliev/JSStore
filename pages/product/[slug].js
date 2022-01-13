@@ -7,18 +7,16 @@ import {
   ListItem,
   Typography,
 } from '@material-ui/core';
-import { useRouter } from 'next/router';
 import React from 'react';
 import Layout from '../../components/Layout';
 import useStyles from '../../styles/styles';
-import data from '../../utils/data';
 import NextLink from 'next/link';
 import Image from 'next/image';
+import db from '../../utils/db'
+import Product from '../../models/Product';
 
-export default function ProductScreen() {
-  const router = useRouter();
-  const { slug } = router.query;
-  const product = data.products.find((a) => a.slug === slug);
+export default function ProductScreen(props) {
+  const {product} = props;
   const styles = useStyles();
 
   return (
@@ -118,4 +116,17 @@ export default function ProductScreen() {
       )}
     </>
   );
+}
+
+
+export async function getServerSideProps(context) {
+  const { slug } = context.params;
+  await db.connect();
+  const product = await Product.findOne({slug}).lean(); 
+  await db.disconnect();
+  return {
+    props: {
+      product: db.convertDocToObj(product)
+    }
+  };
 }

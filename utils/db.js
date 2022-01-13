@@ -36,6 +36,14 @@ async function disconnect() {
   }
 }
 
-const db = { connect, disconnect };
+
+function convertDocToObj (obj) {
+  obj._id = obj._id.toString();
+  obj.createdAt = obj.createdAt.toString();
+  obj.updatedAt = obj.updatedAt.toString();
+  return obj;
+}
+
+const db = { connect, disconnect, convertDocToObj };
 
 export default db;
