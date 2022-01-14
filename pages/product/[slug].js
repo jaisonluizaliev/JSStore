@@ -1,3 +1,4 @@
+import React, { useContext } from 'react';
 import {
   Button,
   Card,
@@ -7,18 +8,28 @@ import {
   ListItem,
   Typography,
 } from '@material-ui/core';
-import React from 'react';
 import Layout from '../../components/Layout';
 import useStyles from '../../styles/styles';
 import NextLink from 'next/link';
 import Image from 'next/image';
-import db from '../../utils/db'
+import db from '../../utils/db';
 import Product from '../../models/Product';
+import axios from 'axios';
+import { Store } from '../../utils/Store';
 
 export default function ProductScreen(props) {
-  const {product} = props;
+  const { dispatch } = useContext(Store);
+  const { product } = props;
   const styles = useStyles();
 
+  const addToCartHandler = async () => {
+    const { data } = await axios.get(`/api/products/${product._id}`);
+    if (data.countInStock <= 0) {
+      window.alert('Sorry, product is out of stock');
+      return;
+    }
+    dispatch({ type: 'CART_ADD_ITEM', payload: { ...product, quantity: 1 } });
+  };
   return (
     <>
       {!product ? (
@@ -104,7 +115,12 @@ export default function ProductScreen(props) {
                     </Grid>
                   </ListItem>
                   <ListItem>
-                    <Button fullWidth variant="contained" color="primary">
+                    <Button
+                      fullWidth
+                      variant="contained"
+                      color="primary"
+                      onClick={addToCartHandler}
+                    >
                       Adicionar ao Carrinho
                     </Button>
                   </ListItem>
@@ -118,15 +134,14 @@ export default function ProductScreen(props) {
   );
 }
 
-
 export async function getServerSideProps(context) {
   const { slug } = context.params;
   await db.connect();
-  const product = await Product.findOne({slug}).lean(); 
+  const product = await Product.findOne({ slug }).lean();
   await db.disconnect();
   return {
     props: {
-      product: db.convertDocToObj(product)
-    }
+      product: db.convertDocToObj(product),
+    },
   };
 }
