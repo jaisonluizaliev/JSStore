@@ -1,4 +1,19 @@
+import bcrypt from 'bcryptjs';
 const data = {
+  users: [
+    {
+      name: 'Jonas',
+      email: 'admin@example.com',
+      password: bcrypt.hashSync('123456'),
+      isAdmin: true,
+    },
+    {
+      name: 'Joana',
+      email: 'joana@joana.com',
+      password: bcrypt.hashSync('123456'),
+      isAdmin: false,
+    },
+  ],
   products: [
     {
       name: 'Sandália Rosa',
@@ -88,7 +103,7 @@ const data = {
       name: 'Scarpin Branco',
       slug: 'scarpin-branco',
       category: 'scarpin',
-      image:'/scarpin-branco.jpg',
+      image: '/scarpin-branco.jpg',
       price: 59.9,
       brand: 'Amart',
       rating: 4.5,
@@ -99,8 +114,4 @@ const data = {
   ],
 };
 
-
 export default data;
-
-
-
