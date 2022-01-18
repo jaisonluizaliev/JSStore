@@ -41,6 +41,10 @@ const useStyles = makeStyles({
     borderRadius: '4px',
     padding: '2px',
   },
+  form : {
+    maxWidth: '450px',
+    margin: '0 auto',
+  },
 });
 
 export default useStyles;
