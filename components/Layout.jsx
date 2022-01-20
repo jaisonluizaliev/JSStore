@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import Head from 'next/head';
 import {
   Link,
@@ -11,16 +11,20 @@ import {
   CssBaseline,
   Switch,
   Badge,
+  Button,
+  Menu,
+  MenuItem,
 } from '@material-ui/core';
 import useStyles from '../styles/styles';
 import NextLink from 'next/link';
 import { Store } from '../utils/Store';
 import Cookies from 'js-cookie';
+import { useRouter } from 'next/router';
 
 export default function Layout({ title, description, children }) {
-
-  const {state, dispatch} = useContext(Store);
-  const {darkMode, cart} = state;
+  const router = useRouter(); 
+  const { state, dispatch } = useContext(Store);
+  const { darkMode, cart, userInfo } = state;
   const styles = useStyles();
   // let cart = {cartItems:[0,0,0]}
   // console.log(cart, 'this is log')
@@ -30,7 +34,25 @@ export default function Layout({ title, description, children }) {
     });
     const newMode = !darkMode;
     Cookies.set('darkMode', newMode ? 'ON' : 'OFF');
-  }
+  };
+
+  const [anchorEl, setAnchorEl] = useState(null);
+
+  const loginClickHandler = (e) => {
+    setAnchorEl(e.currentTarget);
+  };
+
+  const loginMenuCloseHandler = () => {
+    setAnchorEl(null);
+  };
+
+  const logoutClickHandler = () => {
+    setAnchorEl(null);
+    dispatch({ type: 'USER_LOGOUT' });
+    Cookies.remove('userInfo');
+    Cookies.remove('cartItems');
+    router.push('/');
+  };
 
   const theme = createTheme({
     typography: {
@@ -72,14 +94,14 @@ export default function Layout({ title, description, children }) {
             </NextLink>
             <div className={styles.grow}></div>
             <div>
-              <Switch
-                checked={darkMode}
-                onChange={darkModeChangeHandler}
-              />
+              <Switch checked={darkMode} onChange={darkModeChangeHandler} />
               <NextLink href="/cart" passHref>
                 <Link>
                   {cart && cart.cartItems.length > 0 ? (
-                    <Badge color="secondary" badgeContent={cart.cartItems.length}>
+                    <Badge
+                      color="secondary"
+                      badgeContent={cart.cartItems.length}
+                    >
                       Cart
                     </Badge>
                   ) : (
@@ -87,9 +109,35 @@ export default function Layout({ title, description, children }) {
                   )}
                 </Link>
               </NextLink>
-              <NextLink href="/login" passHref>
-                <Link>Area do Cliente</Link>
-              </NextLink>
+              {userInfo ? (
+                <>
+                  <Button
+                    aria-controls="simple-menu"
+                    aria-haspopup="true"
+                    onClick={loginClickHandler}
+                    className={styles.navbarButton}
+                  >
+                    {userInfo.name}
+                  </Button>
+                  <Menu
+                    id="simple-menu"
+                    anchorEl={anchorEl}
+                    keepMounted
+                    open={Boolean(anchorEl)}
+                    onClose={loginMenuCloseHandler}
+                  >
+                    <MenuItem onClick={loginMenuCloseHandler}>Perfil</MenuItem>
+                    <MenuItem onClick={loginMenuCloseHandler}>
+                      Minha conta
+                    </MenuItem>
+                    <MenuItem onClick={logoutClickHandler}>Sair</MenuItem>
+                  </Menu>
+                </>
+              ) : (
+                <NextLink href="/login" passHref>
+                  <Link>Area do Cliente</Link>
+                </NextLink>
+              )}
             </div>
           </Toolbar>
         </AppBar>

@@ -23,7 +23,7 @@ const useStyles = makeStyles({
     textAlign: 'center',
     padding: '20px 0',
     background: '#e4edf9',
-    borderTop: '4px solid rgba(0,0,0, 0.3)'
+    borderTop: '4px solid rgba(0,0,0, 0.3)',
   },
   brand: {
     fontWeight: 'bold',
@@ -36,14 +36,19 @@ const useStyles = makeStyles({
     marginTop: 10,
     marginBottom: 10,
   },
-  imageSlug :{
+  imageSlug: {
     backgroundColor: '#e4edf9',
     borderRadius: '4px',
     padding: '2px',
   },
-  form : {
+  form: {
     maxWidth: '450px',
     margin: '0 auto',
+  },
+  navbarButton: {
+    color: '#266fce',
+    textTransform: 'initial',
+    fontWeight: '500'
   },
 });
 

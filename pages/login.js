@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import NextLink from 'next/link';
 import Layout from '../components/Layout';
 import useStyles from '../styles/styles';
@@ -11,8 +11,23 @@ import {
   Typography,
 } from '@material-ui/core'; 
 import axios from 'axios';
+import { useRouter } from 'next/router';
+import { Store } from '../utils/Store';
+import Cookies from 'js-cookie';
+
 
 export default function Login() {
+  const router = useRouter();
+  const { redirect } = router.query;
+  const {state, dispatch} = useContext(Store);
+  const {userInfo} = state;
+  useEffect(() => {
+    if(userInfo) {
+      router.push('/')
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+  
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
 
@@ -23,9 +38,11 @@ export default function Login() {
     try {
       const { data } = await axios.post('/api/users/login', {
         email,
-        password,
+        password, 
       });
-      alert('Logado com sucesso', data);
+      dispatch({type:'USER_LOGIN', payload: data});
+      Cookies.set('userInfo', data);
+      router.push(redirect || '/');
     } catch (err) {
       alert(err.response.data ? err.response.data.messsage : err.message);
     }
