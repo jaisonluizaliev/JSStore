@@ -9,25 +9,24 @@ import {
   ListItem,
   TextField,
   Typography,
-} from '@material-ui/core'; 
+} from '@material-ui/core';
 import axios from 'axios';
 import { useRouter } from 'next/router';
 import { Store } from '../utils/Store';
 import Cookies from 'js-cookie';
 
-
 export default function Login() {
   const router = useRouter();
   const { redirect } = router.query;
-  const {state, dispatch} = useContext(Store);
-  const {userInfo} = state;
+  const { state, dispatch } = useContext(Store);
+  const { userInfo } = state;
   useEffect(() => {
-    if(userInfo) {
-      router.push('/')
+    if (userInfo) {
+      router.push('/');
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-  
+
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
 
@@ -38,9 +37,9 @@ export default function Login() {
     try {
       const { data } = await axios.post('/api/users/login', {
         email,
-        password, 
+        password,
       });
-      dispatch({type:'USER_LOGIN', payload: data});
+      dispatch({ type: 'USER_LOGIN', payload: data });
       Cookies.set('userInfo', data);
       router.push(redirect || '/');
     } catch (err) {
@@ -82,7 +81,7 @@ export default function Login() {
           </ListItem>
           <ListItem>
             Não Tem conta ? &nbsp;
-            <NextLink href="register" passHref>
+            <NextLink href={`/register?redirect=${redirect || '/'}`} passHref>
               <Link>Criar Conta</Link>
             </NextLink>
           </ListItem>
