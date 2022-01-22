@@ -42,7 +42,7 @@ const useStyles = makeStyles({
     padding: '2px',
   },
   form: {
-    maxWidth: '450px',
+    maxWidth: '550px',
     margin: '0 auto',
   },
   navbarButton: {
