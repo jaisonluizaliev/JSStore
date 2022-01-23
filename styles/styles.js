@@ -48,8 +48,11 @@ const useStyles = makeStyles({
   navbarButton: {
     color: '#266fce',
     textTransform: 'initial',
-    fontWeight: '500'
+    fontWeight: '500',
   },
+  transparentBackground: {
+    background: 'transparent',
+  }
 });
 
 export default useStyles;

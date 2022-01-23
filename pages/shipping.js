@@ -161,7 +161,7 @@ export default function Shipping() {
               rules={{
                 required: true,
                 minLenght: 8,
-                maxLength: 8,
+                maxLength: 9,
               }}
               render={({ field }) => (
                 <TextField
