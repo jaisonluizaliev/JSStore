@@ -17,8 +17,7 @@ import Product from '../../models/Product';
 import axios from 'axios';
 import { Store } from '../../utils/Store';
 import { useRouter } from 'next/router';
-
-
+import { currencyPTBR } from '../../utils/currency';
 
 export default function ProductScreen(props) {
   const router = useRouter();
@@ -36,7 +35,7 @@ export default function ProductScreen(props) {
       return;
     }
     dispatch({ type: 'CART_ADD_ITEM', payload: { ...product, quantity } });
-    router.push('/cart')
+    router.push('/cart');
   };
   return (
     <>
@@ -99,12 +98,7 @@ export default function ProductScreen(props) {
                         <Typography>Preço</Typography>
                       </Grid>
                       <Grid item xs={6}>
-                        <Typography>
-                          {Number(product.price).toLocaleString('pt-br', {
-                            style: 'currency',
-                            currency: 'BRL',
-                          })}
-                        </Typography>
+                        <Typography>{currencyPTBR(product.price)}</Typography>
                       </Grid>
                     </Grid>
                   </ListItem>

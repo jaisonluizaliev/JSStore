@@ -17,6 +17,7 @@ import axios from 'axios';
 import { useRouter } from 'next/router';
 import { useContext } from 'react';
 import { Store } from '../utils/Store';
+import { currencyPTBR } from '../utils/currency';
 
 export default function Home(props) {
   const router = useRouter();
@@ -60,10 +61,7 @@ export default function Home(props) {
               </NextLink>
               <CardActions>
                 <Typography>
-                  {Number(product.price).toLocaleString('pt-br', {
-                    style: 'currency',
-                    currency: 'BRL',
-                  })}
+                  {currencyPTBR(product.price) }
                 </Typography>
                 <Button
                   size="small"

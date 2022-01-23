@@ -49,7 +49,7 @@ export default function Payment() {
     }
   };
   return (
-    <Layout>
+    <Layout title="Pagamento">
       <CheckoutWizard activeStep={2} />
       <form className={styles.form} onSubmit={submitHandler}>
         <Typography variant="h1" component="h1">

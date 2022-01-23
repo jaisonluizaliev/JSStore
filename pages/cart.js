@@ -23,7 +23,7 @@ import {
 } from '@material-ui/core';
 import axios from 'axios';
 import { useRouter } from 'next/router';
-
+import { currencyPTBR } from '../utils/currency';
 
 function CartScreen() {
   const router = useRouter();
@@ -43,7 +43,7 @@ function CartScreen() {
 
   const checkoutHandler = () => {
     router.push('/shipping');
-  }
+  };
 
   const removeItemHandler = (item) => {
     dispatch({ type: 'CART_REMOVE_ITEM', payload: item });
@@ -111,7 +111,9 @@ function CartScreen() {
                           ))}
                         </Select>
                       </TableCell>
-                      <TableCell align="right">{item.price}</TableCell>
+                      <TableCell align="right">
+                        {currencyPTBR(item.price)}
+                      </TableCell>
                       <TableCell align="right">
                         <Button
                           variant="contained"
@@ -134,16 +136,18 @@ function CartScreen() {
                   <Typography variant="h2">
                     SubTotal ({cartItems.reduce((a, c) => a + c.quantity, 0)}
                     {'  '}pares){' '}
-                    {cartItems
-                      .reduce((a, c) => a + c.quantity * c.price, 0)
-                      .toLocaleString('pt-br', {
-                        style: 'currency',
-                        currency: 'BRL',
-                      })}
+                    {currencyPTBR(
+                      cartItems.reduce((a, c) => a + c.quantity * c.price, 0)
+                    )}
                   </Typography>
                 </ListItem>
                 <ListItem>
-                  <Button variant="contained" fullWidth color="primary" onClick={checkoutHandler}>
+                  <Button
+                    variant="contained"
+                    fullWidth
+                    color="primary"
+                    onClick={checkoutHandler}
+                  >
                     Finalizar Compra
                   </Button>
                 </ListItem>
