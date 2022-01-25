@@ -6,11 +6,12 @@ import useStyles from '../../styles/styles';
 import Image from 'next/image';
 import NextLink from 'next/link';
 import axios from 'axios';
-// import { useSnackbar } from 'notistack';
+import { useSnackbar } from 'notistack';
 import { getError } from '../../utils/error';
 import CheckoutWizard from '../../components/CheckoutWizard';
 import Layout from '../../components/Layout';
 import { currencyPTBR } from '../../utils/currency';
+
 import {
   Card,
   CircularProgress,
@@ -26,6 +27,7 @@ import {
   TableRow,
   Typography,
 } from '@material-ui/core';
+import { PayPalButtons, usePayPalScriptReducer } from '@paypal/react-paypal-js';
 
 function reducer(state, action) {
   switch (action.type) {
@@ -35,7 +37,14 @@ function reducer(state, action) {
       return { ...state, loading: false, order: action.payload };
     case 'FETCH_FAIL':
       return { ...state, loading: false, error: action.payload };
-
+    case 'PAY_REQUEST':
+      return { ...state, loadingPay: true };
+    case 'PAY_SUCCESS':
+      return { ...state, loadingPay: false, successPay: true };
+    case 'PAY_FAIL':
+      return { ...state, loadingPay: false, errorPay: action.payload };
+    case 'PAY_RESET':
+      return { ...state, loadingPay: false, successPay: false, errorPay: '' };
     default:
       return state;
   }
@@ -43,16 +52,20 @@ function reducer(state, action) {
 
 function Order({ params }) {
   const orderId = params.id;
+  const [{ isPending }, paypalDispatch] = usePayPalScriptReducer();
   const styles = useStyles();
   const router = useRouter();
   const { state } = useContext(Store);
   const { userInfo } = state;
 
-  const [{ loading, error, order }, dispatch] = useReducer(reducer, {
-    loading: true,
-    order: {},
-    error: '',
-  });
+  const [{ loading, error, order, successPay }, dispatch] = useReducer(
+    reducer,
+    {
+      loading: true,
+      order: {},
+      error: '',
+    }
+  );
 
   const {
     shippingAddress,
@@ -86,13 +99,68 @@ function Order({ params }) {
       }
     };
 
-    if (!orderId._id || (orderId._id && orderId._id !== orderId)) {
+    if (
+      !order._id ||
+      successPay ||
+      (order._id && order._id !== orderId)
+    ) {
       fetchOrder();
+      if (successPay) {
+        dispatch({ type: 'PAY_RESET' });
+      }
+    } else {
+      const loadPaypalScript = async () => {
+        const { data: clientId } = await axios.get('/api/keys/paypal', {
+          headers: { authorization: `Bearer ${userInfo.token}` },
+        });
+        paypalDispatch({
+          type: 'resetOptions',
+          value: { 'client-id': clientId, currency: 'BRL' },
+        });
+        paypalDispatch({ type: 'setLoadingStatus', value: 'pending' });
+      };
+      loadPaypalScript();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [order]);
+  }, [order, successPay]);
 
-  // const { enqueueSnackbar, closeSnackbar } = useSnackbar();
+  const { enqueueSnackbar, closeSnackbar } = useSnackbar();
+
+  function createOrder(data, actions) {
+    return actions.order
+      .create({
+        purchase_units: [
+          {
+            amount: { value: totalPrice },
+          },
+        ],
+      })
+      .then((orderID) => {
+        return orderID;
+      });
+  }
+
+  function onApprove(data, actions) {
+    return actions.order.capture().then(async function (details) {
+      closeSnackbar();
+      try {
+        dispatch({ type: 'PAY_REQUEST' });
+        const { data } = axios.put(`/api/orders/${order._id}/pay`, details, {
+          headers: { authorization: `Bearer ${userInfo.token}` },
+        });
+        dispatch({ type: 'PAY_SUCCESS', payload: data });
+        enqueueSnackbar('Pagamento Efetuado!', { variant: 'success' });
+      } catch (error) {
+        dispatch({ type: 'PAY_FAIL', payload: getError(error) });
+        enqueueSnackbar(getError(error), { variant: 'error' });
+      }
+    });
+  }
+
+  function onError(err) {
+    closeSnackbar();
+    enqueueSnackbar(getError(err), { variant: 'error' });
+  }
 
   return (
     <Layout title={`Order ${orderId}`}>
@@ -174,7 +242,7 @@ function Order({ params }) {
                             <TableCell>
                               <NextLink href={`/product/${item.slug}`} passHref>
                                 <Link>
-                                  <Typography>{item.name}</Typography>
+                                  <Typography>{item.name}</Typography> 
                                 </Link>
                               </NextLink>
                             </TableCell>
@@ -254,6 +322,21 @@ function Order({ params }) {
                     </Grid>
                   </Grid>
                 </ListItem>
+                {!isPaid && (
+                  <ListItem>
+                    {isPending ? (
+                      <CircularProgress/>
+                    ) : (
+                      <div className={styles.fullWidth}>
+                        <PayPalButtons
+                          createOrder={createOrder}
+                          onApprove={onApprove}
+                          onError={onError}
+                        />
+                      </div>
+                    )}
+                  </ListItem>
+                )}
               </List>
             </Card>
           </Grid>

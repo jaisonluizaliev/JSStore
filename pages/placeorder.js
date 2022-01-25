@@ -63,6 +63,7 @@ function PlaceOrder() {
     closeSnackbar();
     try {
       setLoading(true);
+      console.log(cartItems)
       const { data } = await axios.post(
         '/api/orders',
         {
@@ -257,4 +258,5 @@ function PlaceOrder() {
     </Layout>
   );
 }
+
 export default dynamic(() => Promise.resolve(PlaceOrder), { ssr: false });

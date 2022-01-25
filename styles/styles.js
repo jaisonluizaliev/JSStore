@@ -55,6 +55,9 @@ const useStyles = makeStyles({
   },
   error: {
     background: '#f04040',
+  },
+  fullWidth: {
+    width: '100%',
   }
 });
 

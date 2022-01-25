@@ -16,6 +16,7 @@ handler.post(async (req, res) => {
     ...req.body,
     user: req.user._id,
   });
+  console.log(req.body)
   const order = await newOrder.save();
   res.status(201).send(order);
 });
