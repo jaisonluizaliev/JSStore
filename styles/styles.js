@@ -52,6 +52,9 @@ const useStyles = makeStyles({
   },
   transparentBackground: {
     background: 'transparent',
+  },
+  error: {
+    background: '#f04040',
   }
 });
 
