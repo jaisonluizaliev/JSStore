@@ -8,7 +8,7 @@ import NextLink from 'next/link';
 import axios from 'axios';
 import { useSnackbar } from 'notistack';
 import { getError } from '../../utils/error';
-import CheckoutWizard from '../../components/CheckoutWizard';
+// import CheckoutWizard from '../../components/CheckoutWizard';
 import Layout from '../../components/Layout';
 import { currencyPTBR } from '../../utils/currency';
 
@@ -164,7 +164,7 @@ function Order({ params }) {
 
   return (
     <Layout title={`Order ${orderId}`}>
-      <CheckoutWizard activeStep={4} />
+      {/* <CheckoutWizard activeStep={4} /> */}
       <Typography variant="h1" component="h1">
         Pedido Nº {orderId}
       </Typography>

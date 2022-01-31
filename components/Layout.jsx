@@ -22,7 +22,7 @@ import Cookies from 'js-cookie';
 import { useRouter } from 'next/router';
 
 export default function Layout({ title, description, children }) {
-  const router = useRouter(); 
+  const router = useRouter();
   const { state, dispatch } = useContext(Store);
   const { darkMode, cart, userInfo } = state;
   const styles = useStyles();
@@ -38,12 +38,15 @@ export default function Layout({ title, description, children }) {
 
   const [anchorEl, setAnchorEl] = useState(null);
 
-  const loginClickHandler = (e) => {
+  const loginClickHandler = (e ) => {
     setAnchorEl(e.currentTarget);
   };
-
-  const loginMenuCloseHandler = () => {
+  
+  const loginMenuCloseHandler = (e, redirect) => {
     setAnchorEl(null);
+    if (redirect) {
+      router.push(redirect);
+    }
   };
 
   const logoutClickHandler = () => {
@@ -126,9 +129,15 @@ export default function Layout({ title, description, children }) {
                     open={Boolean(anchorEl)}
                     onClose={loginMenuCloseHandler}
                   >
-                    <MenuItem onClick={loginMenuCloseHandler}>Perfil</MenuItem>
-                    <MenuItem onClick={loginMenuCloseHandler}>
-                      Minha conta
+                    <MenuItem
+                      onClick={(e) => loginMenuCloseHandler(e, '/profile')}
+                    >
+                      Perfil
+                    </MenuItem>
+                    <MenuItem
+                      onClick={(e) => loginMenuCloseHandler(e, '/orderhistory')}
+                    >
+                      Histórico
                     </MenuItem>
                     <MenuItem onClick={logoutClickHandler}>Sair</MenuItem>
                   </Menu>
