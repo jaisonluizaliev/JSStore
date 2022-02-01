@@ -42,6 +42,7 @@ const useStyles = makeStyles({
     padding: '2px',
   },
   form: {
+    width: '100%',
     maxWidth: '550px',
     margin: '0 auto',
   },
@@ -58,7 +59,7 @@ const useStyles = makeStyles({
   },
   fullWidth: {
     width: '100%',
-  }
+  },
 });
 
 export default useStyles;

@@ -16,10 +16,15 @@ import { Store } from '../utils/Store';
 import Link from 'next/link';
 import { Controller, useForm } from 'react-hook-form';
 import { useSnackbar } from 'notistack';
+import { getError } from '../utils/error';
 
 export default function Register() {
-  const {handleSubmit, control, formState: {errors}} = useForm();
-  const {enqueueSnackbar, closeSnackbar} = useSnackbar()
+  const {
+    handleSubmit,
+    control,
+    formState: { errors },
+  } = useForm();
+  const { enqueueSnackbar, closeSnackbar } = useSnackbar();
   const router = useRouter();
   const { redirect } = router.query;
   const { state, dispatch } = useContext(Store);
@@ -31,13 +36,13 @@ export default function Register() {
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
- 
+
   const styles = useStyles();
 
-  const submitHandler = async ({name, email, password, confirmPassword}) => {
+  const submitHandler = async ({ name, email, password, confirmPassword }) => {
     closeSnackbar();
     if (password !== confirmPassword) {
-      enqueueSnackbar('Senhas diferentes entre si', {variant: 'há um erro'});
+      enqueueSnackbar('Senhas diferentes entre si', { variant: 'há um erro' });
       return;
     }
     try {
@@ -50,10 +55,7 @@ export default function Register() {
       Cookies.set('userInfo', data);
       router.push(redirect || '/');
     } catch (error) {
-      enqueueSnackbar(
-        error.response.data ? error.response.data.message : error.message,
-        {variant: 'há um erro'}
-      );
+      enqueueSnackbar(getError(error), { variant: 'há um erro' });
     }
   };
   return (

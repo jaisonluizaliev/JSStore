@@ -16,6 +16,7 @@ import { Store } from '../utils/Store';
 import Cookies from 'js-cookie';
 import { Controller, useForm } from 'react-hook-form';
 import { useSnackbar } from 'notistack';
+import {getError} from '../utils/error';
 
 export default function Login() {
   const { enqueueSnackbar, closeSnackbar } = useSnackbar();
@@ -48,10 +49,7 @@ export default function Login() {
       Cookies.set('userInfo', data);
       router.push(redirect || '/');
     } catch (err) {
-      enqueueSnackbar(
-        err.response.data ? err.response.data.messsage : err.message,
-        { variant: 'senha invalida' }
-      );
+      enqueueSnackbar(getError(err), {variant: 'error'});
     }
   };
 
