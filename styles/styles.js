@@ -55,7 +55,7 @@ const useStyles = makeStyles({
     background: 'transparent',
   },
   error: {
-    background: '#f04040',
+    color: '#f04040',
   },
   fullWidth: {
     width: '100%',

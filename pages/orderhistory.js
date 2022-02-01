@@ -22,6 +22,7 @@ import React, { useContext, useEffect, useReducer } from 'react';
 import Layout from '../components/Layout';
 import useStyles from '../styles/styles';
 import { getError } from '../utils/error';
+import { currencyPTBR } from '../utils/currency';
 import { Store } from '../utils/Store';
 
 function reducer(state, action) {
@@ -117,9 +118,13 @@ function OrderHistory() {
                       <TableBody>
                         {orders.map((order) => (
                           <TableRow key={order._id}>
-                            <TableCell>{order._id.substring(20, 24)}</TableCell>
-                            <TableCell>{order.createdAt}</TableCell>
-                            <TableCell>{order.totalPrice}</TableCell>
+                            <TableCell>{order._id.substring(18, 24)}</TableCell>
+                            <TableCell>
+                              {order.createdAt.substring(0, 10)}
+                            </TableCell>
+                            <TableCell>
+                              {currencyPTBR(order.totalPrice)}
+                            </TableCell>
                             <TableCell>
                               {order.isPaid
                                 ? `Pago em ${order.paidAt}`
@@ -132,7 +137,7 @@ function OrderHistory() {
                             </TableCell>
                             <TableCell>
                               <NextLink href={`/order/${order._id}`} passHref>
-                                <Button color="secondary"variant="contained">
+                                <Button color="secondary" variant="contained">
                                   detalhes...
                                 </Button>
                               </NextLink>

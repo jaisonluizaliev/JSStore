@@ -134,6 +134,13 @@ export default function Layout({ title, description, children }) {
                     >
                       Perfil
                     </MenuItem>
+                    {userInfo.isAdmin && (
+                      <MenuItem
+                        onClick={(e) => loginMenuCloseHandler(e, '/admin/dashboard')}
+                      >
+                        Painel Do Administrador
+                      </MenuItem>
+                    )}
                     <MenuItem
                       onClick={(e) => loginMenuCloseHandler(e, '/orderhistory')}
                     >
